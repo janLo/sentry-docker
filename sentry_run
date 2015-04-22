@@ -7,7 +7,7 @@ export SENTRY_CONF=$SENTRY_CONF_FILE
 SCRIPTS_DIR=${SENTRY_SCRIPTS_DIR:-/conf}
 
 # if starting the web worker then try to initialize DB and superuser
-if [ "$1" == "start" ] || [ "$1" == "prepare" ]; then
+if [ "$1" == "prepare" ]; then
 
 sentry --config=$SENTRY_CONF_FILE upgrade --noinput
 
@@ -34,9 +34,13 @@ EOF
             fi
         fi
     fi
+    exit 0
 fi
 
-if [ "$1" != "prepare" ]; then
+if [ "$1" != "sentry" ]; then
+    shift
     exec sentry --config=$SENTRY_CONF_FILE $@
 fi
+
+exec $@
 
