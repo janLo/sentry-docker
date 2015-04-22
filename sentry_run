@@ -37,7 +37,7 @@ EOF
     exit 0
 fi
 
-if [ "$1" != "sentry" ]; then
+if [ "$1" == "sentry" ]; then
     shift
     exec sentry --config=$SENTRY_CONF_FILE $@
 fi
